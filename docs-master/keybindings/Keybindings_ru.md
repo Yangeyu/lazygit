@@ -59,6 +59,14 @@ _This file is auto-generated. To update, make the changes in the pkg/i18n direct
 | `` <enter> `` | Подтвердить |  |
 | `` <esc> `` | Закрыть/отменить |  |
 
+## Suggested commit message
+
+| Key | Action | Info |
+|-----|--------|-------------|
+| `` <enter> `` | Accept suggestion |  |
+| `` <ctrl+g> `` | Regenerate commit message |  |
+| `` <esc> `` | Dismiss suggestion |  |
+
 ## Worktrees
 
 | Key | Action | Info |

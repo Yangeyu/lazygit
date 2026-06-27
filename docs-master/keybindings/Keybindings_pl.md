@@ -369,6 +369,14 @@ _This file is auto-generated. To update, make the changes in the pkg/i18n direct
 | `` b `` | Pokaż opcje masowych operacji na submodułach |  |
 | `` / `` | Filtruj bieżący widok po tekście |  |
 
+## Suggested commit message
+
+| Key | Action | Info |
+|-----|--------|-------------|
+| `` <enter> `` | Accept suggestion |  |
+| `` <ctrl+g> `` | Regenerate commit message |  |
+| `` <esc> `` | Dismiss suggestion |  |
+
 ## Tagi
 
 | Key | Action | Info |

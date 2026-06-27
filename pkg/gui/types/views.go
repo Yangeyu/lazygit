@@ -29,6 +29,7 @@ type Views struct {
 	Menu              *gocui.View
 	CommitMessage     *gocui.View
 	CommitDescription *gocui.View
+	AICommitMessage   *gocui.View
 	CommitFiles       *gocui.View
 	SubCommits        *gocui.View
 	Information       *gocui.View

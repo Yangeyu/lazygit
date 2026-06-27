@@ -35,6 +35,7 @@ type Helpers struct {
 	AmendHelper    *AmendHelper
 	FixupHelper    *FixupHelper
 	Commits        *CommitsHelper
+	AICommit       *AICommitHelper
 	SuspendResume  *SuspendResumeHelper
 	Snake          *SnakeHelper
 	// lives in context package because our contexts need it to render to main
@@ -74,6 +75,7 @@ func NewStubHelpers() *Helpers {
 		AmendHelper:       &AmendHelper{},
 		FixupHelper:       &FixupHelper{},
 		Commits:           &CommitsHelper{},
+		AICommit:          &AICommitHelper{},
 		Snake:             &SnakeHelper{},
 		Diff:              &DiffHelper{},
 		Repos:             &ReposHelper{},

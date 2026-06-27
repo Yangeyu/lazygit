@@ -63,6 +63,7 @@ func (gui *Gui) orderedViewNameMappings() []viewNameMapping {
 		{viewPtr: &gui.Views.StatusSpacer2, name: "statusSpacer2"},
 
 		// popups.
+		{viewPtr: &gui.Views.AICommitMessage, name: "aiCommitMessage"},
 		{viewPtr: &gui.Views.CommitMessage, name: "commitMessage"},
 		{viewPtr: &gui.Views.CommitDescription, name: "commitDescription"},
 		{viewPtr: &gui.Views.Menu, name: "menu"},
@@ -125,6 +126,9 @@ func (gui *Gui) createAllViews() error {
 	gui.Views.CommitDescription.Visible = false
 	gui.Views.CommitDescription.Editable = true
 	gui.Views.CommitDescription.Editor = gocui.EditorFunc(gui.commitDescriptionEditor)
+
+	gui.Views.AICommitMessage.Visible = false
+	gui.Views.AICommitMessage.Wrap = true
 
 	gui.Views.Confirmation.Visible = false
 	gui.Views.Confirmation.Wrap = true
@@ -198,6 +202,7 @@ func (gui *Gui) configureViewProperties() {
 	gui.Views.StagingSecondary.Title = gui.c.Tr.StagedChanges
 	gui.Views.CommitMessage.Title = gui.c.Tr.CommitSummary
 	gui.Views.CommitDescription.Title = gui.c.Tr.CommitDescriptionTitle
+	gui.Views.AICommitMessage.Title = gui.c.Tr.AICommitMessageTitle
 	gui.Views.Extras.Title = gui.c.Tr.CommandLog
 	gui.Views.Snake.Title = gui.c.Tr.SnakeTitle
 

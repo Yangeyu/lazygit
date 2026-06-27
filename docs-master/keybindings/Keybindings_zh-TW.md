@@ -59,6 +59,14 @@ _This file is auto-generated. To update, make the changes in the pkg/i18n direct
 | `` <enter> `` | 確認 |  |
 | `` <esc> `` | 關閉/取消 |  |
 
+## Suggested commit message
+
+| Key | Action | Info |
+|-----|--------|-------------|
+| `` <enter> `` | Accept suggestion |  |
+| `` <ctrl+g> `` | Regenerate commit message |  |
+| `` <esc> `` | Dismiss suggestion |  |
+
 ## 主面板 (補丁生成)
 
 | Key | Action | Info |

@@ -140,6 +140,10 @@ func (self *Views) CommitDescription() *ViewDriver {
 	return self.regularView("commitDescription")
 }
 
+func (self *Views) AICommitMessage() *ViewDriver {
+	return self.regularView("aiCommitMessage")
+}
+
 func (self *Views) Suggestions() *ViewDriver {
 	return self.regularView("suggestions")
 }

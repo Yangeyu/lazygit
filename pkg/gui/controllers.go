@@ -50,6 +50,8 @@ func (gui *Gui) resetHelpersAndControllers() {
 		setCommitDescription,
 	)
 
+	aiCommitHelper := helpers.NewAICommitHelper(helperCommon, commitsHelper)
+
 	gpgHelper := helpers.NewGpgHelper(helperCommon)
 	viewHelper := helpers.NewViewHelper(helperCommon, gui.State.Contexts)
 	patchBuildingHelper := helpers.NewPatchBuildingHelper(helperCommon)
@@ -96,7 +98,7 @@ func (gui *Gui) resetHelpersAndControllers() {
 		Bisect:          bisectHelper,
 		Suggestions:     suggestionsHelper,
 		Files:           helpers.NewFilesHelper(helperCommon),
-		WorkingTree:     helpers.NewWorkingTreeHelper(helperCommon, refsHelper, commitsHelper, gpgHelper, rebaseHelper),
+		WorkingTree:     helpers.NewWorkingTreeHelper(helperCommon, refsHelper, commitsHelper, aiCommitHelper, gpgHelper, rebaseHelper),
 		Tags:            helpers.NewTagsHelper(helperCommon, commitsHelper, gpgHelper),
 		BranchesHelper:  helpers.NewBranchesHelper(helperCommon, worktreeHelper),
 		GPG:             helpers.NewGpgHelper(helperCommon),
@@ -107,6 +109,7 @@ func (gui *Gui) resetHelpersAndControllers() {
 		AmendHelper:     helpers.NewAmendHelper(helperCommon, gpgHelper),
 		FixupHelper:     helpers.NewFixupHelper(helperCommon),
 		Commits:         commitsHelper,
+		AICommit:        aiCommitHelper,
 		SuspendResume:   helpers.NewSuspendResumeHelper(helperCommon),
 		Snake:           helpers.NewSnakeHelper(helperCommon),
 		Diff:            diffHelper,
@@ -151,6 +154,10 @@ func (gui *Gui) resetHelpersAndControllers() {
 	)
 
 	commitDescriptionController := controllers.NewCommitDescriptionController(
+		common,
+	)
+
+	aiCommitMessageController := controllers.NewAICommitMessageController(
 		common,
 	)
 
@@ -380,6 +387,11 @@ func (gui *Gui) resetHelpersAndControllers() {
 	controllers.AttachControllers(gui.State.Contexts.CommitDescription,
 		commitDescriptionController,
 		verticalScrollControllerFactory.Create(gui.State.Contexts.CommitDescription),
+	)
+
+	controllers.AttachControllers(gui.State.Contexts.AICommitMessage,
+		aiCommitMessageController,
+		verticalScrollControllerFactory.Create(gui.State.Contexts.AICommitMessage),
 	)
 
 	controllers.AttachControllers(gui.State.Contexts.RemoteBranches,

@@ -322,7 +322,7 @@ func (self *ConfirmationHelper) ResizeCurrentPopupPanels() {
 			self.resizeConfirmationPanel(parentPopupContext)
 		case self.c.Contexts().Prompt, self.c.Contexts().Suggestions:
 			self.resizePromptPanel(parentPopupContext)
-		case self.c.Contexts().CommitMessage, self.c.Contexts().CommitDescription:
+		case self.c.Contexts().CommitMessage, self.c.Contexts().CommitDescription, self.c.Contexts().AICommitMessage:
 			self.ResizeCommitMessagePanels(parentPopupContext)
 		}
 
@@ -427,10 +427,22 @@ func (self *ConfirmationHelper) ResizeCommitMessagePanels(parentPopupContext typ
 	if contentHeight < minHeight {
 		contentHeight = minHeight
 	}
-	x0, y0, x1, y1 := self.getPopupPanelDimensionsAux(contentWidth, contentHeight, parentPopupContext)
 
-	_, _ = self.c.GocuiGui().SetView(self.c.Views().CommitMessage.Name(), x0, y0, x1, y0+summaryViewHeight-1, 0)
-	_, _ = self.c.GocuiGui().SetView(self.c.Views().CommitDescription.Name(), x0, y0+summaryViewHeight, x1, y1+summaryViewHeight, 0)
+	// When the AI suggestion panel is shown, it sits above the summary. We add
+	// its height to the height we center on so that the whole group stays
+	// centered, then carve it off the top.
+	aiViewHeight := 0
+	if self.c.Views().AICommitMessage.Visible {
+		aiViewHeight = 8
+	}
+
+	x0, y0, x1, y1 := self.getPopupPanelDimensionsAux(contentWidth, contentHeight+aiViewHeight, parentPopupContext)
+
+	if aiViewHeight > 0 {
+		_, _ = self.c.GocuiGui().SetView(self.c.Views().AICommitMessage.Name(), x0, y0, x1, y0+aiViewHeight-1, 0)
+	}
+	_, _ = self.c.GocuiGui().SetView(self.c.Views().CommitMessage.Name(), x0, y0+aiViewHeight, x1, y0+aiViewHeight+summaryViewHeight-1, 0)
+	_, _ = self.c.GocuiGui().SetView(self.c.Views().CommitDescription.Name(), x0, y0+aiViewHeight+summaryViewHeight, x1, y1+summaryViewHeight, 0)
 }
 
 func (self *ConfirmationHelper) IsPopupPanel(context types.Context) bool {

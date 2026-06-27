@@ -20,6 +20,7 @@ type WorkingTreeHelper struct {
 	c                    *HelperCommon
 	refHelper            *RefsHelper
 	commitsHelper        *CommitsHelper
+	aiCommitHelper       *AICommitHelper
 	gpgHelper            *GpgHelper
 	mergeAndRebaseHelper *MergeAndRebaseHelper
 }
@@ -28,6 +29,7 @@ func NewWorkingTreeHelper(
 	c *HelperCommon,
 	refHelper *RefsHelper,
 	commitsHelper *CommitsHelper,
+	aiCommitHelper *AICommitHelper,
 	gpgHelper *GpgHelper,
 	mergeAndRebaseHelper *MergeAndRebaseHelper,
 ) *WorkingTreeHelper {
@@ -35,6 +37,7 @@ func NewWorkingTreeHelper(
 		c:                    c,
 		refHelper:            refHelper,
 		commitsHelper:        commitsHelper,
+		aiCommitHelper:       aiCommitHelper,
 		gpgHelper:            gpgHelper,
 		mergeAndRebaseHelper: mergeAndRebaseHelper,
 	}
@@ -139,6 +142,14 @@ func (self *WorkingTreeHelper) HandleCommitPressWithMessage(initialMessage strin
 				SkipHooksPrefix: self.c.UserConfig().Git.SkipHookPrefix,
 			},
 		)
+
+		// Kick off an AI suggestion if the user has opted into generating one
+		// automatically. We deliberately keep focus on the summary input so the
+		// suggestion appears alongside the (still editable) message rather than
+		// hijacking the panel.
+		if self.aiCommitHelper.Enabled() && self.c.UserConfig().Git.Commit.AutoGenerateCommitMessage {
+			return self.aiCommitHelper.Generate()
+		}
 
 		return nil
 	})

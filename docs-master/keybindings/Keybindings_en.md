@@ -390,6 +390,14 @@ _This file is auto-generated. To update, make the changes in the pkg/i18n direct
 | `` b `` | View bulk submodule options |  |
 | `` / `` | Filter the current view by text |  |
 
+## Suggested commit message
+
+| Key | Action | Info |
+|-----|--------|-------------|
+| `` <enter> `` | Accept suggestion |  |
+| `` <ctrl+g> `` | Regenerate commit message |  |
+| `` <esc> `` | Dismiss suggestion |  |
+
 ## Tags
 
 | Key | Action | Info |

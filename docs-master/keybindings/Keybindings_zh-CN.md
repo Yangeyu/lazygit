@@ -52,6 +52,14 @@ _This file is auto-generated. To update, make the changes in the pkg/i18n direct
 | `` ] `` | 下一个标签 |  |
 | `` [ `` | 上一个标签 |  |
 
+## Suggested commit message
+
+| Key | Action | Info |
+|-----|--------|-------------|
+| `` <enter> `` | Accept suggestion |  |
+| `` <ctrl+g> `` | Regenerate commit message |  |
+| `` <esc> `` | Dismiss suggestion |  |
+
 ## 子提交
 
 | Key | Action | Info |

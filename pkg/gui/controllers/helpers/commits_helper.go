@@ -210,6 +210,7 @@ func (self *CommitsHelper) CloseCommitMessagePanel() {
 
 	self.c.Views().CommitMessage.Visible = false
 	self.c.Views().CommitDescription.Visible = false
+	self.c.Views().AICommitMessage.Visible = false
 
 	self.c.Context().Pop()
 }

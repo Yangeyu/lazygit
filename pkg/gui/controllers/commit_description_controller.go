@@ -43,7 +43,23 @@ func (self *CommitDescriptionController) GetKeybindings(opts types.KeybindingsOp
 		},
 	}
 
+	if self.c.Helpers().AICommit.Enabled() {
+		bindings = append(bindings, &types.Binding{
+			Keys:        opts.GetKeys(opts.Config.CommitMessage.GenerateMessage),
+			Handler:     self.generateMessage,
+			Description: self.c.Tr.GenerateCommitMessage,
+		})
+	}
+
 	return bindings
+}
+
+func (self *CommitDescriptionController) generateMessage() error {
+	if err := self.c.Helpers().AICommit.Generate(); err != nil {
+		return err
+	}
+	self.c.Context().Replace(self.c.Contexts().AICommitMessage)
+	return nil
 }
 
 func (self *CommitDescriptionController) Context() types.Context {

@@ -884,6 +884,7 @@ func (gui *Gui) Run(startArgs appTypes.StartArgs) error {
 			// between those two views by clicking.
 			isCommitMessageOrSuggestionsView := func(viewName string) bool {
 				return viewName == "commitMessage" || viewName == "commitDescription" ||
+					viewName == "aiCommitMessage" ||
 					viewName == "prompt" || viewName == "suggestions"
 			}
 			if !isCommitMessageOrSuggestionsView(gui.currentViewName()) || !isCommitMessageOrSuggestionsView(view.Name()) {

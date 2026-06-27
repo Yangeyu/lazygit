@@ -96,6 +96,16 @@ func NewContextTree(c *ContextCommon) *ContextTree {
 				HasUncontrolledBounds: true,
 			}),
 		),
+		AICommitMessage: NewSimpleContext(
+			NewBaseContext(NewBaseContextOpts{
+				Kind:                  types.PERSISTENT_POPUP,
+				View:                  c.Views().AICommitMessage,
+				WindowName:            "aiCommitMessage",
+				Key:                   AI_COMMIT_MESSAGE_CONTEXT_KEY,
+				Focusable:             true,
+				HasUncontrolledBounds: true,
+			}),
+		),
 		Search: NewSimpleContext(
 			NewBaseContext(NewBaseContextOpts{
 				Kind:       types.PERSISTENT_POPUP,
