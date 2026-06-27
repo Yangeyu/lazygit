@@ -337,6 +337,16 @@ type TranslationSet struct {
 	CommitDescriptionSubTitle             string
 	CommitDescriptionFooter               string
 	CommitHooksDisabledSubTitle           string
+	AICommitMessageTitle                  string
+	AICommitMessageFooter                 string
+	GeneratingCommitMessage               string
+	GeneratingCommitMessageStatus         string
+	NoStagedChangesToGenerateFrom         string
+	GenerateCommitMessageFailed           string
+	GenerateCommitMessage                 string
+	RegenerateCommitMessage               string
+	AcceptCommitMessageSuggestion         string
+	DismissCommitMessageSuggestion        string
 	LocalBranchesTitle                    string
 	SearchTitle                           string
 	TagsTitle                             string
@@ -1463,6 +1473,16 @@ func EnglishTranslationSet() *TranslationSet {
 		CommitDescriptionSubTitle:            "Press {{.togglePanelKeyBinding}} to toggle focus, {{.commitMenuKeybinding}} to open menu",
 		CommitDescriptionFooter:              "Press {{.confirmInEditorKeybinding}} to submit",
 		CommitHooksDisabledSubTitle:          "(hooks disabled)",
+		AICommitMessageTitle:                 "Suggested commit message",
+		AICommitMessageFooter:                "{{.acceptKeybinding}}: accept, {{.regenerateKeybinding}}: regenerate, {{.dismissKeybinding}}: dismiss",
+		GeneratingCommitMessage:              "Generating commit message...",
+		GeneratingCommitMessageStatus:        "Generating commit message",
+		NoStagedChangesToGenerateFrom:        "There are no staged changes to generate a commit message from.",
+		GenerateCommitMessageFailed:          "Failed to generate a commit message:",
+		GenerateCommitMessage:                "Generate commit message",
+		RegenerateCommitMessage:              "Regenerate commit message",
+		AcceptCommitMessageSuggestion:        "Accept suggestion",
+		DismissCommitMessageSuggestion:       "Dismiss suggestion",
 		LocalBranchesTitle:                   "Local branches",
 		SearchTitle:                          "Search",
 		TagsTitle:                            "Tags",

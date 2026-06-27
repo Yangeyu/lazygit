@@ -399,6 +399,19 @@ git:
     # If autoWrapCommitMessage is true, the width to wrap to
     autoWrapWidth: 72
 
+    # Command used to generate a commit message in the commit message panel. The
+    # staged diff is passed to the command on stdin, and the suggested message is
+    # read from stdout. This is provider-agnostic: point it at any LLM CLI or a
+    # script of your own (e.g. 'llm', 'aichat', or 'ollama run mistral "write a
+    # commit message for this diff"'). If empty, the generate-message feature is
+    # disabled.
+    generateCommitMessageCommand: ""
+
+    # If true, automatically run generateCommitMessageCommand when the commit
+    # message panel is opened. Has no effect if generateCommitMessageCommand is
+    # empty.
+    autoGenerateCommitMessage: false
+
   # Config relating to merging
   merging:
     # If true, run merges in a subprocess so that if a commit message is required,
@@ -812,6 +825,8 @@ keybinding:
     bulkMenu: b
   commitMessage:
     commitMenu: <ctrl+o>
+    generateMessage: <ctrl+g>
+    acceptSuggestion: <enter>
 ```
 <!-- END CONFIG YAML -->
 

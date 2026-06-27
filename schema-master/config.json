@@ -19,6 +19,15 @@
           "type": "integer",
           "description": "If autoWrapCommitMessage is true, the width to wrap to",
           "default": 72
+        },
+        "generateCommitMessageCommand": {
+          "type": "string",
+          "description": "Command used to generate a commit message in the commit message panel. The staged diff is passed to the command on stdin, and the suggested message is read from stdout. This is provider-agnostic: point it at any LLM CLI or a script of your own (e.g. 'llm', 'aichat', or 'ollama run mistral \"write a commit message for this diff\"'). If empty, the generate-message feature is disabled."
+        },
+        "autoGenerateCommitMessage": {
+          "type": "boolean",
+          "description": "If true, automatically run generateCommitMessageCommand when the commit message panel is opened. Has no effect if generateCommitMessageCommand is empty.",
+          "default": false
         }
       },
       "additionalProperties": false,
@@ -1249,6 +1258,34 @@
             }
           ],
           "default": "\u003cctrl+o\u003e"
+        },
+        "generateMessage": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            }
+          ],
+          "default": "\u003cctrl+g\u003e"
+        },
+        "acceptSuggestion": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            }
+          ],
+          "default": "\u003center\u003e"
         }
       },
       "additionalProperties": false,

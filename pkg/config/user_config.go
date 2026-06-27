@@ -388,6 +388,10 @@ type CommitConfig struct {
 	AutoWrapCommitMessage bool `yaml:"autoWrapCommitMessage"`
 	// If autoWrapCommitMessage is true, the width to wrap to
 	AutoWrapWidth int `yaml:"autoWrapWidth"`
+	// Command used to generate a commit message in the commit message panel. The staged diff is passed to the command on stdin, and the suggested message is read from stdout. This is provider-agnostic: point it at any LLM CLI or a script of your own (e.g. 'llm', 'aichat', or 'ollama run mistral "write a commit message for this diff"'). If empty, the generate-message feature is disabled.
+	GenerateCommitMessageCommand string `yaml:"generateCommitMessageCommand"`
+	// If true, automatically run generateCommitMessageCommand when the commit message panel is opened. Has no effect if generateCommitMessageCommand is empty.
+	AutoGenerateCommitMessage bool `yaml:"autoGenerateCommitMessage"`
 }
 
 type MergingConfig struct {
@@ -660,7 +664,9 @@ type KeybindingSubmodulesConfig struct {
 }
 
 type KeybindingCommitMessageConfig struct {
-	CommitMenu Keybinding `yaml:"commitMenu"`
+	CommitMenu       Keybinding `yaml:"commitMenu"`
+	GenerateMessage  Keybinding `yaml:"generateMessage"`
+	AcceptSuggestion Keybinding `yaml:"acceptSuggestion"`
 }
 
 // OSConfig contains config on the level of the os
@@ -924,9 +930,11 @@ func GetDefaultConfigForPlatform(platform string) *UserConfig {
 		},
 		Git: GitConfig{
 			Commit: CommitConfig{
-				SignOff:               false,
-				AutoWrapCommitMessage: true,
-				AutoWrapWidth:         72,
+				SignOff:                      false,
+				AutoWrapCommitMessage:        true,
+				AutoWrapWidth:                72,
+				GenerateCommitMessageCommand: "",
+				AutoGenerateCommitMessage:    false,
 			},
 			Merging: MergingConfig{
 				ManualCommit:       false,
@@ -1166,7 +1174,9 @@ func GetDefaultConfigForPlatform(platform string) *UserConfig {
 				BulkMenu: Keybinding{"b"},
 			},
 			CommitMessage: KeybindingCommitMessageConfig{
-				CommitMenu: Keybinding{"<ctrl+o>"},
+				CommitMenu:       Keybinding{"<ctrl+o>"},
+				GenerateMessage:  Keybinding{"<ctrl+g>"},
+				AcceptSuggestion: Keybinding{"<enter>"},
 			},
 		},
 	}
