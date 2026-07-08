@@ -19,8 +19,11 @@ set -euo pipefail
 
 API_BASE="https://llm-r1no6xbr99vaoqm4.cn-beijing.maas.aliyuncs.com/compatible-mode/v1"
 MODEL="qwen:qwen3.7-plus" # switch to qwen:qwen3.7-max for higher quality
-GEN_PROMPT="Generate a Conventional Commits message for the staged diff provided on stdin. The summary line must be <type>(<scope>): <description>, where type is one of feat, fix, docs, style, refactor, perf, test, build, ci, chore (scope is optional). Use the imperative mood, a lowercase description, and no trailing period. Add a blank line and a body of - bullet points only if it conveys useful detail. Output ONLY the commit message: no code fences, no preamble, no quotes."
-GEN_COMMAND="QWEN_API_KEY=\"\$DASHSCOPE_API_KEY\" aichat -m ${MODEL} -S \"${GEN_PROMPT}\""
+GEN_PROMPT='Generate a Conventional Commits message for the staged diff piped on stdin. Above the diff are recent commit subjects from this repository: write your message in the SAME LANGUAGE as those commits (Chinese if they are Chinese, English if they are English) and match their style. The summary line must be <type>(<scope>): <description>, where type is one of feat, fix, docs, style, refactor, perf, test, build, ci, chore (scope is optional). Use the imperative mood and no trailing period. Add a blank line and a body of - bullet points only if it conveys useful detail. Output ONLY the commit message: no code fences, no preamble, no quotes.'
+# The command feeds recent commit subjects ahead of the staged diff so the model
+# can match the repository's existing commit language and style. lazygit runs
+# this via `sh -c` and pipes the staged diff to stdin (which `cat` forwards).
+GEN_COMMAND="log=\$(git log -n 20 --pretty=format:%s 2>/dev/null); { printf 'Recent commit subjects (match their language and style):\n%s\n\nStaged diff:\n' \"\$log\"; cat; } | QWEN_API_KEY=\"\$DASHSCOPE_API_KEY\" aichat -m ${MODEL} -S '${GEN_PROMPT}'"
 
 note() { printf '\033[1;34m==>\033[0m %s\n' "$1"; }
 warn() { printf '\033[1;33mwarning:\033[0m %s\n' "$1"; }
@@ -35,6 +38,7 @@ fi
 
 command -v aichat >/dev/null || warn "aichat not found on PATH — install it with 'brew install aichat'."
 
+
 # --- 1. install the lazygit binary ------------------------------------------
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 if command -v go >/dev/null && grep -q "module github.com/jesseduffield/lazygit" "$SCRIPT_DIR/go.mod" 2>/dev/null; then
@@ -47,7 +51,7 @@ fi
 
 # --- 2. resolve config paths ------------------------------------------------
 if command -v aichat >/dev/null; then
-  AICHAT_CONFIG="$(aichat --info 2>/dev/null | awk '/^config_file/{print $2}')"
+  AICHAT_CONFIG="$(aichat --info 2>/dev/null | awk '/^config_file/{print $2}' || true)"
 fi
 if [ -z "${AICHAT_CONFIG:-}" ]; then
   case "$(uname -s)" in
