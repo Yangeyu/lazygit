@@ -17,7 +17,7 @@
 
 set -euo pipefail
 
-API_BASE="https://llm-r1no6xbr99vaoqm4.cn-beijing.maas.aliyuncs.com/compatible-mode/v1"
+API_BASE="https://dashscope.aliyuncs.com/compatible-mode/v1"
 MODEL="qwen:qwen3.7-plus" # switch to qwen:qwen3.7-max for higher quality
 GEN_PROMPT='Generate a Conventional Commits message for the staged diff piped on stdin. Above the diff are recent commit subjects from this repository: write your message in the SAME LANGUAGE as those commits (Chinese if they are Chinese, English if they are English) and match their style. The summary line must be <type>(<scope>): <description>, where type is one of feat, fix, docs, style, refactor, perf, test, build, ci, chore (scope is optional). Use the imperative mood and no trailing period. Add a blank line and a body of - bullet points only if it conveys useful detail. Output ONLY the commit message: no code fences, no preamble, no quotes.'
 # The command feeds recent commit subjects ahead of the staged diff so the model
