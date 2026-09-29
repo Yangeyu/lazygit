@@ -82,9 +82,8 @@ qwen = {
     "api_base": os.environ["API_BASE"],
     "models": [
         {"name": "qwen3.7-plus", "max_input_tokens": 32768},
-        {"name": "qwen3.7-max", "max_input_tokens": 32768},
     ],
-    "patch": {"chat_completions": {r"qwen3\.7.*": {"body": {"enable_thinking": False}}}},
+    "patch": {"chat_completions": {r"qwen.*": {"body": {"enable_thinking": False}}}},
 }
 for i, c in enumerate(clients):
     if isinstance(c, dict) and c.get("name") == "qwen":
